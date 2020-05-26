@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
 
 export default class Employees extends Component {
   constructor() {
@@ -31,6 +32,22 @@ export default class Employees extends Component {
               <span style={{ marginRight: "1em" }}>
                 {emp.hireDate.substring(0, 10)}
               </span>
+              <span style={{ margin: "1em" }}>
+                <Button
+                  size="sm"
+                  style={{
+                    margin: "0.5em",
+                    background: "grey",
+                    border: "none",
+                  }}
+                >
+                  edit
+                </Button>
+                <Button variant="danger" size="sm" style={{ margin: "0.5em" }}>
+                  delete
+                </Button>
+              </span>
+              <hr />
             </li>
           ))}
         </ul>

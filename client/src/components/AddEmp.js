@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -8,6 +9,32 @@ import {
 } from "react-bootstrap";
 
 export default class AddEmp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      phoneNumber: "",
+      email: "",
+      salary: "",
+    };
+  }
+
+  change = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/api/emps", this.state)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    console.log(this.state);
+  };
+
   CustomToggle({ children, eventKey }) {
     const customOnClick = useAccordionToggle(eventKey, () =>
       console.log("clicked")
@@ -31,30 +58,49 @@ export default class AddEmp extends Component {
             </Card.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                <Form>
+                <Form onSubmit={this.submitHandler}>
                   <Form.Group controlId="formBasicName">
                     <Form.Label>Full Name</Form.Label>
                     <Form.Control
+                      name="name"
                       type="name"
                       placeholder="Enter employee name"
+                      onChange={(e) => this.change(e)}
                     />
                   </Form.Group>
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control
+                      name="email"
+                      type="email"
+                      placeholder="Enter email"
+                      onChange={(e) => this.change(e)}
+                    />
                   </Form.Group>
                   <Form.Group controlId="formBasicSalary">
                     <Form.Label>Salary</Form.Label>
-                    <Form.Control type="text" placeholder="Enter salary" />
+                    <Form.Control
+                      name="salary"
+                      type="text"
+                      placeholder="Enter salary"
+                      onChange={(e) => this.change(e)}
+                    />
                   </Form.Group>
                   <Form.Group controlId="formBasicPhone">
                     <Form.Label>Phone Number</Form.Label>
                     <Form.Control
+                      name="phoneNumber"
                       type="text"
                       placeholder="Enter phone number"
+                      onChange={(e) => this.change(e)}
                     />
                   </Form.Group>
-                  <Button variant="dark" type="submit" size="sm">
+                  <Button
+                    variant="dark"
+                    type="submit"
+                    size="sm"
+                    onClick={(e) => this.onSubmit(e)}
+                  >
                     Submit
                   </Button>
                 </Form>
