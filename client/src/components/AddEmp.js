@@ -53,7 +53,7 @@ export default class AddEmp extends Component {
           <Card style={{ border: "none" }}>
             <Card.Header style={{ background: "transparent" }}>
               <this.CustomToggle as={Button} variant="link" eventKey="0">
-                Add new employee!
+                Add employee
               </this.CustomToggle>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
