@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
 import axios from "axios";
 import "./App.css";
 
@@ -36,9 +35,12 @@ export default class App extends Component {
         const newEmp = {};
         newEmp.name = res.data.name;
         newEmp.hireDate = res.data.hireDate;
+        newEmp.salary = res.data.salary;
         this.setState({ employees: [...this.state.employees, res.data] });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
     console.log(this.state);
   };
 
