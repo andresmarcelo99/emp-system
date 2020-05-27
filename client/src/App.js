@@ -4,13 +4,14 @@ import "./App.css";
 
 import Employees from "./components/Employees";
 import AddEmp from "./components/AddEmp";
+import ErrorAlert from "./components/ErrorAlert.js";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       employees: [],
-      errorMsg: "",
+      alert: "",
     };
   }
 
@@ -40,11 +41,16 @@ export default class App extends Component {
         newEmp.name = res.data.name;
         newEmp.hireDate = res.data.hireDate;
         newEmp.salary = res.data.salary;
-        this.setState({ employees: [...this.state.employees, res.data] });
+        this.setState({
+          employees: [...this.state.employees, res.data],
+          alert: "",
+        });
       })
       .catch((err) => {
-        console.log(err);
-        this.setState({ errorMsg: err.message });
+        console.log(err.response.data);
+        this.setState({
+          alert: <ErrorAlert err={err.response.data} />,
+        });
       });
     console.log(this.state);
   };
@@ -66,7 +72,13 @@ export default class App extends Component {
     return (
       <div className="container mt-4">
         <h4 className="display-4 text-center mb-4">Employees System</h4>
-        <AddEmp change={this.change} onSubmit={this.onSubmit} />
+        {this.state.alert}
+        <AddEmp
+          change={this.change}
+          onSubmit={this.onSubmit}
+          alert={this.state.alertShow}
+          errorMsg={this.state.errorMsg}
+        />
         <Employees emps={this.state.employees} deleteEmp={this.deleteEmp} />
       </div>
     );

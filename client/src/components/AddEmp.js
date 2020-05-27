@@ -23,6 +23,7 @@ export default class AddEmp extends Component {
   render() {
     return (
       <div>
+        <p>{this.props.alertShow}</p>
         <Accordion defaultActiveKey="">
           <Card style={{ border: "none" }}>
             <Card.Header style={{ background: "transparent" }}>
