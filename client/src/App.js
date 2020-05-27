@@ -6,9 +6,13 @@ import Employees from "./components/Employees";
 import AddEmp from "./components/AddEmp";
 
 export default class App extends Component {
-  state = {
-    employees: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      employees: [],
+      errorMsg: "",
+    };
+  }
 
   componentDidMount() {
     fetch("/api/emps")
@@ -40,6 +44,7 @@ export default class App extends Component {
       })
       .catch((err) => {
         console.log(err);
+        this.setState({ errorMsg: err.message });
       });
     console.log(this.state);
   };
