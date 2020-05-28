@@ -1,8 +1,22 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Popover, OverlayTrigger, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
+import EmpForm from "./EmpForm";
 
 export default class Employees extends Component {
+  popover = (
+    <Popover id="popover-basic">
+      <Popover.Title as="h3">Edit Employee</Popover.Title>
+      <Popover.Content>
+        <EmpForm
+          change={this.props.change}
+          onSubmit={this.props.onSubmitEdit}
+          typeClick={this.props.onSubmitEdit}
+        />
+      </Popover.Content>
+    </Popover>
+  );
+
   render() {
     return (
       <div>
@@ -19,16 +33,23 @@ export default class Employees extends Component {
                 {emp.hireDate.substring(0, 10)}
               </span>
               <span style={{ margin: "1em" }}>
-                <Button
-                  size="sm"
-                  style={{
-                    margin: "0.5em",
-                    background: "grey",
-                    border: "none",
-                  }}
+                <OverlayTrigger
+                  trigger="click"
+                  placement="bottom"
+                  overlay={this.popover}
                 >
-                  edit
-                </Button>
+                  <Button
+                    size="sm"
+                    onClick={this.props.editEmp.bind(this, emp.email)}
+                    style={{
+                      margin: "0.5em",
+                      background: "grey",
+                      border: "none",
+                    }}
+                  >
+                    edit
+                  </Button>
+                </OverlayTrigger>
                 <Button
                   variant="danger"
                   size="sm"

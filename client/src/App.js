@@ -12,6 +12,7 @@ export default class App extends Component {
     this.state = {
       employees: [],
       alert: "",
+      curr: "",
     };
   }
 
@@ -32,17 +33,32 @@ export default class App extends Component {
   };
 
   onSubmit = (e) => {
-    e.preventDefault();
     axios
       .post("/api/emps", this.state)
       .then((res) => {
         console.log(res);
-        const newEmp = {};
-        newEmp.name = res.data.name;
-        newEmp.hireDate = res.data.hireDate;
-        newEmp.salary = res.data.salary;
         this.setState({
           employees: [...this.state.employees, res.data],
+          alert: "",
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        this.setState({
+          alert: <ErrorAlert err={err.response.data} />,
+        });
+      });
+    console.log(this.state);
+  };
+
+  onSubmitEdit = () => {
+    console.log(this.state.curr);
+    axios
+      .post(`api/emps/edit/${this.state.curr}`, this.state)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          employees: [...this.state.employees],
           alert: "",
         });
       })
@@ -68,6 +84,12 @@ export default class App extends Component {
       .catch((err) => console.log(err));
   };
 
+  editEmp = (_id) => {
+    //  console.log(_id);
+    this.setState({ curr: _id });
+    console.log(this.state.curr);
+  };
+
   render() {
     return (
       <div className="container mt-4">
@@ -79,7 +101,13 @@ export default class App extends Component {
           alert={this.state.alertShow}
           errorMsg={this.state.errorMsg}
         />
-        <Employees emps={this.state.employees} deleteEmp={this.deleteEmp} />
+        <Employees
+          emps={this.state.employees}
+          deleteEmp={this.deleteEmp}
+          editEmp={this.editEmp}
+          change={this.change}
+          onSubmitEdit={this.onSubmitEdit}
+        />
       </div>
     );
   }

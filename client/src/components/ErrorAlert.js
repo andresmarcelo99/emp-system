@@ -10,7 +10,7 @@ export default function ErrorAlert(props) {
         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
         <ul>
           {Object.keys(props.err).map((key) => (
-            <li>
+            <li key={key}>
               {key} {": "} {props.err[key]}{" "}
             </li>
           ))}
