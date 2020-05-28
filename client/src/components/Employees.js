@@ -34,18 +34,6 @@ class Employees extends Component {
     this.props.editEmployee(editEmp, this.props.emp.curr);
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    if (nextProps.email) {
-      this.setState({
-        name: nextProps.name,
-        salary: nextProps.salary,
-        phoneNumber: nextProps.phoneNumber,
-        email: nextProps.email,
-      });
-    }
-  }
-
   popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3">Edit Employee</Popover.Title>
